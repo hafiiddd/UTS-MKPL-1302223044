@@ -15,8 +15,7 @@ import java.util.List;
 public class Employee {
 
     private String employeeId;
-    private String firstName;
-    private String lastName;
+    private FullName fullname;
     private String idNumber;
     private String address;
     private boolean isForeigner;
@@ -26,23 +25,21 @@ public class Employee {
     private EmployeeIncome employeeIncome;
     private List<Child> Children = new LinkedList<>();
 
-    public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, boolean isForeigner, Gender gender) {
+    public Employee(String employeeId, String idNumber, String address) {
         this.employeeId = employeeId;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.idNumber = idNumber;
         this.address = address;
-        this.isForeigner = isForeigner;
-        this.gender = gender;
     }
 
-    public String getLastName() {
-        return lastName;
+    public FullName getFullname() {
+        return fullname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullname(FullName fullname) {
+        this.fullname = fullname;
     }
+
+
 
     public Period getPeriod() {
         return period;
