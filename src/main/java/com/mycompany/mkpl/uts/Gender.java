@@ -11,3 +11,4 @@ package com.mycompany.mkpl.uts;
 public enum Gender {
     MALE,FEMALE
 }
+
