@@ -17,12 +17,10 @@ public class Employee {
     private String employeeId;
     private FullName fullname;
     private String idNumber;
-        private LocalDate joindDate; 
-    private int monthWorkingInYear;
+    private LocalDate joinDate; 
     private String address;
     private boolean isForeigner;
     private Gender gender;
-    private Period period;
     private Spouse spouse;
     private EmployeeIncome employeeIncome;
     private List<Child> Children = new LinkedList<>();
@@ -57,14 +55,6 @@ public class Employee {
         this.fullname = fullname;
     }
 
-    public Period getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(Period period) {
-        this.period = period;
-    }
-
     public Spouse getSpouse() {
         return spouse;
     }
@@ -81,14 +71,15 @@ public class Employee {
 
         //Menghitung berapa lama pegawai bekerja dalam setahun ini, jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
         LocalDate date = LocalDate.now();
-
-        if (date.getYear() == getPeriod().getJoindDate().getYear()) {
-            getPeriod().setMonthWorkingInYear(date.getMonthValue() - getPeriod().getJoindDate().getMonthValue());
+        int monthWorkingInYear;
+        
+        if (date.getYear() == joinDate.getYear()) {
+            monthWorkingInYear= date.getMonthValue() - joinDate.getMonthValue();
         } else {
-            getPeriod().setMonthWorkingInYear(12);
+           monthWorkingInYear = 12;
         }
 
-        return TaxFunction.calculateTax(getEmployeeIncome().getMonthlySalary(), getEmployeeIncome().getOtherMonthlyIncome(), getPeriod().getMonthWorkingInYear(), getEmployeeIncome().getAnnualDeductible(), getSpouse().getSpouseIdNumber().equals(""), getChildren().size());
+        return TaxFunction.calculateTax(getEmployeeIncome().getMonthlySalary(), getEmployeeIncome().getOtherMonthlyIncome(), monthWorkingInYear, getEmployeeIncome().getAnnualDeductible(), getSpouse().getSpouseIdNumber().equals(""), getChildren().size());
     }
 
 }
