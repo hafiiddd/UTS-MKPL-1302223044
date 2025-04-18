@@ -17,6 +17,8 @@ public class Employee {
     private String employeeId;
     private FullName fullname;
     private String idNumber;
+        private LocalDate joindDate; 
+    private int monthWorkingInYear;
     private String address;
     private boolean isForeigner;
     private Gender gender;
@@ -31,6 +33,22 @@ public class Employee {
         this.address = address;
     }
 
+    public List<Child> getChildren() {
+        return Children;
+    }
+
+    public void setChildren(List<Child> Children) {
+        this.Children = Children;
+    }
+
+    public EmployeeIncome getEmployeeIncome() {
+        return employeeIncome;
+    }
+
+    public void setEmployeeIncome(EmployeeIncome employeeIncome) {
+        this.employeeIncome = employeeIncome;
+    }
+
     public FullName getFullname() {
         return fullname;
     }
@@ -38,8 +56,6 @@ public class Employee {
     public void setFullname(FullName fullname) {
         this.fullname = fullname;
     }
-
-
 
     public Period getPeriod() {
         return period;
@@ -59,6 +75,20 @@ public class Employee {
 
     public void addChild(Child child) {
         Children.add(child);
+    }
+
+    public int getAnnualIncomeTax() {
+
+        //Menghitung berapa lama pegawai bekerja dalam setahun ini, jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
+        LocalDate date = LocalDate.now();
+
+        if (date.getYear() == getPeriod().getJoindDate().getYear()) {
+            getPeriod().setMonthWorkingInYear(date.getMonthValue() - getPeriod().getJoindDate().getMonthValue());
+        } else {
+            getPeriod().setMonthWorkingInYear(12);
+        }
+
+        return TaxFunction.calculateTax(getEmployeeIncome().getMonthlySalary(), getEmployeeIncome().getOtherMonthlyIncome(), getPeriod().getMonthWorkingInYear(), getEmployeeIncome().getAnnualDeductible(), getSpouse().getSpouseIdNumber().equals(""), getChildren().size());
     }
 
 }
